@@ -175,6 +175,33 @@ svg .stop:hover circle.ring,svg .stop.on circle.ring{stroke:var(--gold);stroke-w
 .act h3{font-size:24px;margin-top:4px}
 .act p{margin:8px 0 0}
 .act .meta{margin-top:10px;font-size:13px;color:var(--muted);display:flex;gap:6px 18px;flex-wrap:wrap}
+.twocol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;margin-top:56px}
+@media (max-width:760px){.twocol{grid-template-columns:1fr}}
+.twocol ul{margin:0;padding:0;list-style:none}
+.twocol li{padding:9px 0;border-top:1px solid var(--line);font-size:14.5px}
+.twocol li b{font-weight:700;color:var(--navy)}
+.fac h3 .tel{margin-left:8px;font-size:14px;color:#8a6d2a;vertical-align:3px}
+.resto{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:44px;align-items:start;padding-top:10px}
+@media (max-width:820px){.resto{grid-template-columns:1fr;gap:28px}}
+.resto h3{font-size:clamp(28px,3.4vw,36px);margin-top:6px}
+.resto .chefs{margin:10px 0 0;font-size:14px;color:#8a6d2a;letter-spacing:.02em}
+.resto p{margin:14px 0 0}
+.resto .aside h4{margin-top:0}
+.hours{margin:0;padding:0;list-style:none}
+.hours li{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-top:1px solid var(--line);font-size:14.5px}
+.hours li span:last-child{font-variant-numeric:tabular-nums;color:var(--navy);font-weight:700;white-space:nowrap}
+.resto .note{font-size:13.5px;color:var(--muted);margin-top:14px}
+.btn-col{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.btn-col .btn{justify-content:center;text-align:center}
+.btn.solid{background:var(--navy);color:#fff}
+.btn.solid:hover{background:var(--navy-soft)}
+.also{margin-top:60px;padding-top:26px;border-top:1px solid var(--navy)}
+.also-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;margin-top:16px}
+@media (max-width:760px){.also-grid{grid-template-columns:1fr}}
+.also-grid h4{margin:0 0 6px;font-family:var(--f-display);font-weight:500;font-size:21px;color:var(--navy)}
+.also-grid p{margin:0;font-size:14.5px}
+.see-hotel{text-align:center;margin:-10px auto 34px;font-size:14.5px;color:var(--muted)}
+.linklike{background:none;border:0;padding:0;cursor:pointer;font:inherit;color:var(--navy);text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:3px}
 .hotel-box{border:1px solid var(--navy);padding:30px clamp(20px,4vw,40px);margin-bottom:40px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:30px;align-items:center}
 @media (max-width:760px){.hotel-box{grid-template-columns:1fr}}
 .hotel-box ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px}
@@ -246,6 +273,8 @@ footer p{margin:6px 0 0;font-size:13.5px;color:var(--muted)}
 
 <nav class="tabs" aria-label="Sections">
   <div class="wrap tablist" role="tablist">
+    <button class="tab" role="tab" id="tab-hotel" data-panel="hotel" data-t="tab_hotel"></button>
+    <button class="tab" role="tab" id="tab-restaurants" data-panel="restaurants" data-t="tab_restos"></button>
     <button class="tab" role="tab" id="tab-marches" data-panel="marches" data-t="tab_markets"></button>
     <button class="tab" role="tab" id="tab-villages" data-panel="villages" data-t="tab_villages"></button>
     <button class="tab" role="tab" id="tab-activites" data-panel="activites" data-t="tab_activities"></button>
@@ -254,8 +283,53 @@ footer p{margin:6px 0 0;font-size:13.5px;color:var(--muted)}
 </nav>
 
 <main class="wrap">
+  <!-- ===== NOTRE HÔTEL ===== -->
+  <section id="hotel" role="tabpanel" aria-labelledby="tab-hotel">
+    <div class="panel-head">
+      <div class="script" data-t="ho_script"></div>
+      <h2 data-t="ho_title"></h2>
+      <div class="rule"><i></i></div>
+      <p class="lede" data-t="ho_lede"></p>
+    </div>
+    <div class="facts" id="hotel-facts"></div>
+    <div class="section-sep" style="margin-top:56px">
+      <div class="script" data-t="ho_fac_script"></div>
+      <h2 data-t="ho_fac_title"></h2>
+      <div class="rule"><i></i></div>
+    </div>
+    <div class="agrid" id="fac-list"></div>
+    <div class="twocol">
+      <div class="aside">
+        <div class="eyebrow" data-t="ho_room_eyebrow"></div>
+        <h4 data-t="ho_room_title"></h4>
+        <ul id="room-list"></ul>
+      </div>
+      <div class="aside">
+        <div class="eyebrow" data-t="ho_serv_eyebrow"></div>
+        <h4 data-t="ho_serv_title"></h4>
+        <ul id="serv-list"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RESTAURANTS ===== -->
+  <section id="restaurants" role="tabpanel" aria-labelledby="tab-restaurants" hidden>
+    <div class="panel-head">
+      <div class="script" data-t="re_script"></div>
+      <h2 data-t="re_title"></h2>
+      <div class="rule"><i></i></div>
+      <p class="lede" data-t="re_lede"></p>
+    </div>
+    <div class="route-switch" role="group" id="resto-switch"></div>
+    <div class="resto" id="resto-panel"></div>
+    <div class="also">
+      <div class="eyebrow" data-t="re_also"></div>
+      <div class="also-grid" id="bar-list"></div>
+    </div>
+  </section>
+
   <!-- ===== MARCHÉS ===== -->
-  <section id="marches" role="tabpanel" aria-labelledby="tab-marches">
+  <section id="marches" role="tabpanel" aria-labelledby="tab-marches" hidden>
     <div class="panel-head">
       <div class="script" data-t="mk_script"></div>
       <h2 data-t="mk_title"></h2>
@@ -339,14 +413,7 @@ footer p{margin:6px 0 0;font-size:13.5px;color:var(--muted)}
       <div class="rule"><i></i></div>
       <p class="lede" data-t="ac_lede"></p>
     </div>
-    <div class="hotel-box">
-      <div>
-        <div class="eyebrow" data-t="hb_eyebrow"></div>
-        <h3 data-t="hb_title" style="margin-top:6px"></h3>
-        <p class="small" data-t="hb_text"></p>
-      </div>
-      <ul id="hotel-list"></ul>
-    </div>
+    <p class="see-hotel"><span data-t="ac_hotel_pre"></span> <button type="button" class="linklike" data-goto="hotel" data-t="ac_hotel_link"></button></p>
     <div class="chips" role="group" id="chips"></div>
     <div class="agrid" id="act-list"></div>
     <div class="warn" data-t="fire"></div>
@@ -425,7 +492,16 @@ footer p{margin:6px 0 0;font-size:13.5px;color:var(--muted)}
 var T = {
 fr:{
   concierge:"Carnet de la conciergerie", qr_label:"Scannez pour emporter ce carnet sur votre téléphone",
-  intro:"Marchés, villages perchés, balades et véloroute : <em>notre sélection</em> pour découvrir le Luberon au départ de l'hôtel.",
+  intro:"L'hôtel, nos restaurants, les marchés, les villages perchés et la véloroute : <em>notre sélection</em> pour profiter de votre séjour et découvrir le Luberon.",
+  tab_hotel:"Notre hôtel", tab_restos:"Nos restaurants",
+  ho_script:"Bienvenue aux Bories", ho_title:"Notre hôtel", ho_lede:"Tout ce qu'il faut savoir pour profiter pleinement de votre séjour : installations, services et informations pratiques.",
+  ho_fac_script:"Sans quitter l'hôtel", ho_fac_title:"Les installations",
+  ho_room_eyebrow:"Votre chambre", ho_room_title:"Dans votre chambre",
+  ho_serv_eyebrow:"À votre service", ho_serv_title:"Les services de l'hôtel",
+  f_in:"Arrivée, à partir de", f_out:"Départ, au plus tard", f_rec:"Réception · {TEL:9}", f_wifi:"Fibre, offert",
+  re_script:"À table", re_title:"Nos restaurants", re_lede:"Du petit-déjeuner au dîner gastronomique, cinq façons de savourer la Provence sans quitter les Bories.",
+  re_also:"Et aussi", re_hours:"Horaires", re_prices:"Tarifs",
+  ac_hotel_pre:"Piscines, spa, tennis, pétanque : retrouvez les installations de l'hôtel dans l'onglet", ac_hotel_link:"Notre hôtel",
   tab_markets:"Les marchés", tab_villages:"Les villages", tab_activities:"Activités", tab_bike:"À vélo",
   mk_script:"Jour après jour", mk_title:"Les marchés du Luberon",
   mk_lede:"Choisissez un jour pour voir les marchés provençaux autour de l'hôtel. Les marchés saisonniers qui ne se tiennent pas en ce moment apparaissent en fin de liste.",
@@ -474,7 +550,16 @@ fr:{
 },
 en:{
   concierge:"Concierge's notebook", qr_label:"Scan to take this guide with you on your phone",
-  intro:"Markets, hilltop villages, walks and the cycle route: <em>our selection</em> for discovering the Luberon from the hotel.",
+  intro:"The hotel, our restaurants, markets, hilltop villages and the cycle route: <em>our selection</em> for enjoying your stay and discovering the Luberon.",
+  tab_hotel:"Our hotel", tab_restos:"Our restaurants",
+  ho_script:"Welcome to Les Bories", ho_title:"Our hotel", ho_lede:"Everything you need to make the most of your stay: facilities, services and practical information.",
+  ho_fac_script:"Without leaving the hotel", ho_fac_title:"Facilities",
+  ho_room_eyebrow:"Your room", ho_room_title:"In your room",
+  ho_serv_eyebrow:"At your service", ho_serv_title:"Hotel services",
+  f_in:"Check-in, from", f_out:"Check-out, by", f_rec:"Reception · {TEL:9}", f_wifi:"Fibre, complimentary",
+  re_script:"At the table", re_title:"Our restaurants", re_lede:"From breakfast to fine dining, five ways to savour Provence without leaving Les Bories.",
+  re_also:"Also", re_hours:"Opening hours", re_prices:"Prices",
+  ac_hotel_pre:"Pools, spa, tennis, pétanque: the hotel's facilities are in the", ac_hotel_link:"Our hotel tab",
   tab_markets:"Markets", tab_villages:"Villages", tab_activities:"Things to do", tab_bike:"By bike",
   mk_script:"Day by day", mk_title:"Markets of the Luberon",
   mk_lede:"Choose a day to see the Provençal markets around the hotel. Seasonal markets not running at the moment are listed at the end.",
@@ -724,14 +809,72 @@ var V=[
 ];
 
 /* ================= ACTIVITÉS ================= */
-var HOTEL=[
- {b:{fr:"Spa",en:"Spa"},tel:"132",t:{fr:"Hammam, sauna et six cabines de soins. Ouvert tous les jours de 9h30 à 12h30 et de 14h30 à 19h30.",en:"Hammam, sauna and six treatment rooms. Open daily from 9.30 am to 12.30 pm and from 2.30 pm to 7.30 pm."},links:[{fr:"La carte des soins",en:"Treatment menu",u:"https://www.hotellesbories.com/download/129334"},{fr:"Réserver un soin en ligne",en:"Book a treatment online",u:"https://book.pure-informatique.com/DatesBooking.php?locationID=45830"}]},
- {b:{fr:"Piscines",en:"Pools"},t:{fr:"Intérieure, chauffée à 28 °C et ouverte de 7h à 20h. Extérieure, dans les jardins.",en:"Indoor, heated to 28 °C and open from 7 am to 8 pm. Outdoor, in the gardens."}},
- {b:{fr:"Yoga & tai-chi",en:"Yoga & tai chi"},t:{fr:"Yoga le mercredi, tai-chi le vendredi à 18h, de mai à octobre",en:"Yoga on Wednesdays, tai chi on Fridays at 6 pm, May to October"}},
- {b:{fr:"Tennis",en:"Tennis"},t:{fr:"Un court dans les jardins de l'hôtel. Raquettes et balles à disposition ; cours particuliers sur réservation.",en:"A court in the hotel gardens. Rackets and balls available; private lessons on request."}},
- {b:{fr:"Pétanque",en:"Pétanque"},t:{fr:"Un terrain dans les jardins, pour une partie à la provençale",en:"A pitch in the gardens, for a game the Provençal way"}},
- {b:{fr:"Parcours de santé",en:"Fitness trail"},t:{fr:"Le long des chemins du domaine",en:"Along the paths of the estate"}}
+var FAC=[
+ {n:{fr:"Piscine intérieure",en:"Indoor pool"},t:{fr:"Chauffée à 28 °C, ouverte tous les jours de 7h à 20h.",en:"Heated to 28 °C, open daily from 7 am to 8 pm."}},
+ {n:{fr:"Piscine extérieure",en:"Outdoor pool"},t:{fr:"Au cœur des jardins, chauffée en saison, face aux paysages du Luberon.",en:"In the heart of the gardens, heated in season, facing the Luberon landscape."}},
+ {n:{fr:"Spa",en:"Spa"},tel:"132",t:{fr:"Hammam, sauna et six cabines de soins. Ouvert tous les jours de 9h30 à 12h30 et de 14h30 à 19h30.",en:"Hammam, sauna and six treatment rooms. Open daily from 9.30 am to 12.30 pm and from 2.30 pm to 7.30 pm."},links:[{fr:"La carte des soins",en:"Treatment menu",u:"https://www.hotellesbories.com/download/129334"},{fr:"Réserver un soin en ligne",en:"Book a treatment online",u:"https://book.pure-informatique.com/DatesBooking.php?locationID=45830"}]},
+ {n:{fr:"Salle de fitness",en:"Fitness room"},t:{fr:"Une salle équipée pour garder le rythme pendant votre séjour.",en:"An equipped gym to keep up your routine during your stay."}},
+ {n:{fr:"Tennis",en:"Tennis"},t:{fr:"Un court dans les jardins de l'hôtel. Raquettes et balles à disposition ; cours particuliers sur réservation.",en:"A court in the hotel gardens. Rackets and balls available; private lessons on request."}},
+ {n:{fr:"Pétanque",en:"Pétanque"},t:{fr:"Un terrain dans les jardins, pour une partie à la provençale.",en:"A pitch in the gardens, for a game the Provençal way."}},
+ {n:{fr:"Ping-pong",en:"Table tennis"},t:{fr:"Une table à disposition pour petits et grands.",en:"A table available for all ages."}},
+ {n:{fr:"Parcours de santé",en:"Fitness trail"},t:{fr:"Le long des chemins du domaine.",en:"Along the paths of the estate."}},
+ {n:{fr:"Yoga & tai-chi",en:"Yoga & tai chi"},t:{fr:"Yoga le mercredi, tai-chi le vendredi à 18h, de mai à octobre.",en:"Yoga on Wednesdays, tai chi on Fridays at 6 pm, May to October."}},
+ {n:{fr:"Les jardins",en:"The gardens"},t:{fr:"Oliviers, cyprès, chênes verts, lavandes et jardins aromatiques, à parcourir au fil des sentiers.",en:"Olive trees, cypresses, holm oaks, lavender and aromatic gardens, to explore along the paths."}}
 ];
+var ROOM=[
+ {fr:"<b>Climatisation</b> et Wi-Fi fibre offert",en:"<b>Air conditioning</b> and complimentary fibre Wi-Fi"},
+ {fr:"<b>Coffre-fort</b>, minibar et téléphone en ligne directe",en:"<b>Safe</b>, minibar and direct-line telephone"},
+ {fr:"<b>Plateau d'accueil</b> pour le thé et le café",en:"<b>Welcome tray</b> for tea and coffee"},
+ {fr:"<b>Produits d'accueil L'Occitane</b> et sèche-cheveux",en:"<b>L'Occitane toiletries</b> and hairdryer"},
+ {fr:"<b>Lit bébé</b> (0 à 3 ans) offert, sur demande",en:"<b>Baby cot</b> (0 to 3 years) free, on request"},
+ {fr:"<b>Lit supplémentaire</b> sur demande, selon la chambre (35 €)",en:"<b>Extra bed</b> on request, depending on the room (€35)"},
+ {fr:"<b>Animaux</b> bienvenus (25 € par jour)",en:"<b>Pets</b> welcome (€25 per day)"}
+];
+var SERV=[
+ {fr:"<b>Réception 24h/24</b> {TEL:9}",en:"<b>24-hour reception</b> {TEL:9}"},
+ {fr:"<b>Conciergerie</b>, voiturier et bagagiste",en:"<b>Concierge</b>, valet parking and porter"},
+ {fr:"<b>Navette</b> vers le centre du village de Gordes",en:"<b>Shuttle</b> to the centre of Gordes village"},
+ {fr:"<b>Room service</b> 24h/24",en:"<b>Room service</b> 24 hours a day"},
+ {fr:"<b>Parking privé</b> gratuit et deux bornes de recharge électrique",en:"<b>Free private parking</b> and two EV charging points"},
+ {fr:"<b>Vélos électriques</b> sur réservation et abri vélos sécurisé",en:"<b>E-bikes</b> on request and secure bike shelter"},
+ {fr:"<b>Blanchisserie</b> et baby-sitting sur demande",en:"<b>Laundry</b> and babysitting on request"}
+];
+var ZEN_DINNER="https://bookings.zenchef.com/results?rid=353997", ZEN_LUNCH="https://bookings.zenchef.com/results?rid=353449&pid=1001";
+var RESTOS=[
+ {id:"gastro",tab:{fr:"Restaurant des Bories",en:"Restaurant des Bories"},e:{fr:"Restaurant gastronomique",en:"Fine dining"},n:{fr:"Le Restaurant des Bories",en:"Le Restaurant des Bories"},
+  chefs:{fr:"Chef des cuisines Nguyen Danh Cuong · Cheffe pâtissière Ilham Moudnib",en:"Executive chef Nguyen Danh Cuong · Pastry chef Ilham Moudnib"},
+  t:{fr:"Une gastronomie vivante, inspirée du jardin et de la Provence, qui suit les grands principes de l'alimentation anti-inflammatoire : légumes et fruits de saison, herbes fraîches, épices et cuissons douces. Le terroir provençal y dialogue avec des influences asiatiques. Le dîner est servi en salle ou sur la grande terrasse, face au Luberon.",en:"Living, garden-inspired cuisine rooted in Provence and guided by the principles of anti-inflammatory eating: seasonal vegetables and fruit, fresh herbs, spices and gentle cooking. Provençal produce meets Asian influences. Dinner is served in the dining room or on the large terrace overlooking the Luberon."},
+  h:[[{fr:"Dîner, du mardi au samedi",en:"Dinner, Tuesday to Saturday"},{fr:"19h00 – 21h30",en:"7 – 9.30 pm"}]],
+  note:{fr:"Les places étant limitées, nous vous conseillons de réserver votre table.",en:"Seating is limited, so we recommend booking your table."},
+  links:[{fr:"Réserver une table",en:"Book a table",u:ZEN_DINNER,solid:1},{fr:"La carte et les menus",en:"Menu and set menus",u:"https://www.hotellesbories.com/fr/restaurant-gastronomique.html"}]},
+ {id:"bistrot",tab:{fr:"Bistrot",en:"Bistrot"},e:{fr:"Bistrot",en:"Bistro"},n:{fr:"Le Bistrot des Bories",en:"Le Bistrot des Bories"},
+  t:{fr:"Chic et intemporel, le Bistrot propose des produits frais cuisinés en toute simplicité. Cocktails et vins se dégustent sur les terrasses ombragées, autour de la fontaine.",en:"Chic and timeless, the Bistrot serves fresh produce cooked simply. Cocktails and wines are enjoyed on the shaded terraces around the fountain."},
+  h:[[{fr:"Déjeuner, tous les jours",en:"Lunch, daily"},{fr:"12h00 – 14h00",en:"12 – 2 pm"}],[{fr:"Dîner, dimanche et lundi",en:"Dinner, Sunday and Monday"},{fr:"19h00 – 21h30",en:"7 – 9.30 pm"}]],
+  note:{fr:"En été, le déjeuner est servi au Club Piscine.",en:"In summer, lunch is served at the Club Piscine."},
+  links:[{fr:"Réserver le déjeuner",en:"Book lunch",u:ZEN_LUNCH,solid:1},{fr:"Réserver le dîner",en:"Book dinner",u:ZEN_DINNER,solid:1},{fr:"Les cartes du Bistrot",en:"Bistrot menus",u:"https://www.hotellesbories.com/fr/le-bistrot-des-bories.html"}]},
+ {id:"piscine",tab:{fr:"Club Piscine",en:"Club Piscine"},e:{fr:"Au bord de l'eau",en:"By the water"},n:{fr:"Le Club Piscine",en:"The Club Piscine"},
+  t:{fr:"Entre jardins et paysages provençaux, une carte de déjeuner de saison, élaborée avec des producteurs de la région, à savourer au bord de la piscine extérieure.",en:"Between gardens and Provençal landscapes, a seasonal lunch menu made with producers from the region, served beside the outdoor pool."},
+  h:[[{fr:"Déjeuner, tous les jours",en:"Lunch, daily"},{fr:"12h00 – 14h00",en:"12 – 2 pm"}],[{fr:"Sélection de salades",en:"Selection of salads"},{fr:"jusqu'à 18h00",en:"until 6 pm"}],[{fr:"Garden Pool Bar, de juin à septembre",en:"Garden Pool Bar, June to September"},{fr:"10h00 – 18h00",en:"10 am – 6 pm"}]],
+  note:{fr:"Ouvert en saison estivale. Le reste de l'année, le déjeuner est servi au Bistrot.",en:"Open in the summer season. The rest of the year, lunch is served at the Bistrot."},
+  links:[{fr:"Réserver une table",en:"Book a table",u:ZEN_LUNCH,solid:1}]},
+ {id:"room",tab:{fr:"Room service",en:"Room service"},e:{fr:"Dans votre chambre",en:"In your room"},n:{fr:"Le Room service",en:"Room service"},
+  t:{fr:"À toute heure, une carte vous est servie en chambre ou sur votre terrasse, ainsi qu'une carte pour le déjeuner et le dîner. Nos équipes sont à votre disposition pour vous conseiller.",en:"At any hour, a menu is served in your room or on your terrace, along with a lunch and dinner menu. Our team is on hand to advise you."},
+  h:[[{fr:"Carte room service",en:"Room service menu"},{fr:"24h/24",en:"24 hours"}],[{fr:"Petit-déjeuner en chambre",en:"Breakfast in your room"},{fr:"7h30 – 10h30",en:"7.30 – 10.30 am"}]],
+  note:{fr:"Pour commander, contactez la réception : {TEL:9}",en:"To order, call reception: {TEL:9}"},
+  links:[{fr:"Voir la carte du room service",en:"Room service menu",u:"https://www.hotellesbories.com/download/132040",solid:1}]},
+ {id:"pdj",tab:{fr:"Petit-déjeuner",en:"Breakfast"},e:{fr:"Bien commencer la journée",en:"A good start to the day"},n:{fr:"Le Petit-déjeuner",en:"Breakfast"},
+  t:{fr:"Le buffet est dressé dans une borie millénaire. Vous pouvez aussi le savourer en chambre ou sur votre terrasse, face à la nature : boissons chaudes, jus de fruits pressés, fruits frais, viennoiseries et pains, œufs, charcuterie, fromages, produits laitiers, céréales, confitures, ainsi que des produits bio et allégés.",en:"The buffet is laid out in an ancient borie. You can also enjoy it in your room or on your terrace, surrounded by nature: hot drinks, freshly squeezed juices, fresh fruit, pastries and breads, eggs, charcuterie, cheeses, dairy, cereals, jams, as well as organic and light options."},
+  h:[[{fr:"Au buffet",en:"Buffet"},{fr:"7h30 – 10h30",en:"7.30 – 10.30 am"}],[{fr:"En chambre",en:"In your room"},{fr:"7h30 – 10h30",en:"7.30 – 10.30 am"}]],
+  p:[[{fr:"Adulte",en:"Adult"},"25 €"],[{fr:"Enfant de 4 à 12 ans",en:"Child, 4 to 12"},"12 €"],[{fr:"Enfant de 0 à 3 ans",en:"Child, 0 to 3"},{fr:"offert",en:"free"}]],
+  note:{fr:"Tarifs appliqués lorsque le petit-déjeuner n'est pas inclus dans votre séjour.",en:"Prices apply when breakfast is not included in your stay."},
+  links:[]}
+];
+var BARS=[
+ {n:{fr:"Le Bar lounge",en:"The lounge bar"},t:{fr:"Les spécialités de notre barman et la sélection de vins de notre sommelier, autour du piano.",en:"Our barman's specialities and our sommelier's wine selection, around the piano."}},
+ {n:{fr:"Le Tea-time",en:"Tea time"},t:{fr:"Chaque après-midi, boissons chaudes et petits gâteaux de notre cheffe pâtissière vous sont offerts.",en:"Every afternoon, hot drinks and little cakes by our pastry chef are offered to you."}},
+ {n:{fr:"Le Garden Pool Bar",en:"The Garden Pool Bar"},t:{fr:"Boissons et cocktails autour de la piscine, de juin à septembre, de 10h à 18h.",en:"Drinks and cocktails by the pool, June to September, 10 am to 6 pm."}}
+];
+var resto="gastro";
 var A=[
  {c:"her",n:{fr:"Abbaye Notre-Dame de Sénanque",en:"Abbey of Notre-Dame de Sénanque"},t:{fr:"Abbaye cistercienne du XIIe siècle, toujours habitée par une communauté de moines, dans un vallon bordé de lavande. Tenue correcte demandée.",en:"A 12th-century Cistercian abbey, still home to a community of monks, in a valley lined with lavender. Modest dress required."},d:{fr:"3 km",en:"3 km"},s:{fr:"Lavande : mi-juin à mi-juillet",en:"Lavender: mid-June to mid-July"}},
  {c:"her",n:{fr:"Village des Bories",en:"Village des Bories"},t:{fr:"Un hameau de cabanes en pierre sèche restauré en musée de plein air, témoin de la vie rurale d'autrefois.",en:"A hamlet of dry-stone huts restored as an open-air museum, a witness to rural life of the past."},d:{fr:"4 km",en:"4 km"},s:{fr:"Toute l'année",en:"All year"}},
@@ -888,9 +1031,31 @@ function renderVillages(){
   }).join("");
 }
 
+/* ---------- Notre hôtel ---------- */
+function T9(s){return s.replace(/\{TEL:(\d+)\}/g,function(a,n){return tel(n);});}
+function renderHotel(){
+  var F=[["16h",t("f_in")],["12h",t("f_out")],["24h/24",t("f_rec")],["Wi-Fi",t("f_wifi")]];
+  document.getElementById("hotel-facts").innerHTML=F.map(function(f){return '<div class="fact"><b>'+f[0]+'</b><span>'+f[1]+'</span></div>';}).join("");
+  document.getElementById("fac-list").innerHTML=FAC.map(function(f){
+    return '<article class="act fac"><h3>'+L(f.n)+(f.tel?' '+tel(f.tel):'')+'</h3><p>'+L(f.t)+'</p>'+(f.links?'<span class="spa-links">'+f.links.map(function(k){return '<a class="spa-link" href="'+k.u+'" target="_blank" rel="noopener">'+L(k)+'</a>';}).join("")+'</span>':'')+'</article>';
+  }).join("");
+  document.getElementById("room-list").innerHTML=ROOM.map(function(r){return '<li>'+T9(L(r))+'</li>';}).join("");
+  document.getElementById("serv-list").innerHTML=SERV.map(function(r){return '<li>'+T9(L(r))+'</li>';}).join("");
+}
+/* ---------- Restaurants ---------- */
+function renderRestos(){
+  document.getElementById("resto-switch").innerHTML=RESTOS.map(function(r){return '<button type="button" id="rs-'+r.id+'" data-resto="'+r.id+'" aria-pressed="'+(r.id===resto)+'">'+L(r.tab)+'</button>';}).join("");
+  var r=RESTOS.filter(function(x){return x.id===resto;})[0];
+  var hrs='<ul class="hours">'+r.h.map(function(h){return '<li><span>'+L(h[0])+'</span><span>'+L(h[1])+'</span></li>';}).join("")+'</ul>';
+  var pr=r.p?'<h4 style="margin-top:22px">'+t("re_prices")+'</h4><ul class="hours">'+r.p.map(function(h){return '<li><span>'+L(h[0])+'</span><span>'+(typeof h[1]==="string"?h[1]:L(h[1]))+'</span></li>';}).join("")+'</ul>':'';
+  var links=r.links.length?'<div class="btn-col">'+r.links.map(function(k){return '<a class="btn'+(k.solid?' solid':'')+'" href="'+k.u+'" target="_blank" rel="noopener">'+L(k)+' ↗</a>';}).join("")+'</div>':'';
+  document.getElementById("resto-panel").innerHTML='<div><div class="eyebrow">'+L(r.e)+'</div><h3>'+L(r.n)+'</h3>'+(r.chefs?'<p class="chefs">'+L(r.chefs)+'</p>':'')+'<p>'+L(r.t)+'</p></div>'+
+    '<aside class="aside"><h4>'+t("re_hours")+'</h4>'+hrs+pr+(r.note?'<p class="note">'+T9(L(r.note))+'</p>':'')+links+'</aside>';
+  document.getElementById("bar-list").innerHTML=BARS.map(function(b){return '<div><h4>'+L(b.n)+'</h4><p>'+L(b.t)+'</p></div>';}).join("");
+}
+
 /* ---------- Activités ---------- */
 function renderActivities(){
-  document.getElementById("hotel-list").innerHTML=HOTEL.map(function(h){return '<li><b>'+L(h.b)+(h.tel?' '+tel(h.tel):'')+'</b>'+L(h.t)+(h.links?'<span class="spa-links">'+h.links.map(function(k){return '<a class="spa-link" href="'+k.u+'" target="_blank" rel="noopener">'+L(k)+'</a>';}).join("")+'</span>':'')+'</li>';}).join("");
   var cats=["all","her","nat","taste","sky","bike"];
   document.getElementById("chips").innerHTML=cats.map(function(c){return '<button type="button" class="chip" id="chip-'+c+'" data-cat="'+c+'" aria-pressed="'+(c===cat)+'">'+t("cat_"+c)+'</button>';}).join("");
   document.getElementById("act-list").innerHTML=A.filter(function(a){return cat==="all"||a.c===cat;}).map(function(a){
@@ -935,7 +1100,7 @@ function showPanel(p,push){
   document.querySelectorAll("[role=tabpanel]").forEach(function(s){s.hidden=s.id!==p;});
   if(push){ try{history.replaceState(null,"","#"+p);}catch(e){} store("bories-tab",p); }
 }
-function renderAll(){renderStatic();renderMarkets();renderRouteMap();renderVillages();renderActivities();renderBike();}
+function renderAll(){renderStatic();renderHotel();renderRestos();renderMarkets();renderRouteMap();renderVillages();renderActivities();renderBike();}
 
 /* ---------- Événements ---------- */
 document.addEventListener("click",function(e){
@@ -945,6 +1110,8 @@ document.addEventListener("click",function(e){
   if((b=e.target.closest(".day"))){day=+b.dataset.day;renderMarkets();document.getElementById("day-"+day).focus();return;}
   if((b=e.target.closest("#route-switch button"))){route=b.dataset.route;renderRouteMap();return;}
   if((b=e.target.closest(".chip"))){cat=b.dataset.cat;renderActivities();return;}
+  if((b=e.target.closest("#resto-switch button"))){resto=b.dataset.resto;renderRestos();return;}
+  if((b=e.target.closest("[data-goto]"))){showPanel(b.dataset.goto,true);var nv=document.querySelector("nav.tabs");window.scrollTo({top:nv.offsetTop,behavior:"smooth"});return;}
   if((b=e.target.closest("#bike-switch button"))){bike=b.dataset.bike;renderBike();return;}
   if((b=e.target.closest(".stop-item"))){highlight(+b.dataset.i,b.closest("[data-scope]").dataset.scope);return;}
   if((b=e.target.closest("svg .stop"))){var i=+b.dataset.i,sc=b.closest("#map-velo")?"velo":"villages";highlight(i,sc);return;}
@@ -956,7 +1123,8 @@ var sl=store("bories-lang");
 lang = sl==="en"||sl==="fr" ? sl : ((navigator.language||"fr").slice(0,2)==="fr"?"fr":"en");
 var hash=(location.hash||"").replace("#","");
 var st=store("bories-tab");
-var start=["marches","villages","activites","velo"].indexOf(hash)>-1?hash:(["marches","villages","activites","velo"].indexOf(st)>-1?st:"marches");
+var PANELS=["hotel","restaurants","marches","villages","activites","velo"];
+var start=PANELS.indexOf(hash)>-1?hash:(PANELS.indexOf(st)>-1?st:"hotel");
 renderAll();
 showPanel(start,false);
 })();
